@@ -339,6 +339,9 @@ public function wijzigAndereGebruiker(){
         }
         return REQUEST_NOTHING_CHANGED;
     }
+    
+
+    
     public function wijzigWw() {
         $ww= filter_input(INPUT_POST,'ww');
         $nww1= filter_input(INPUT_POST,'nww1');
@@ -409,6 +412,40 @@ public function wijzigAndereGebruiker(){
        
     }
     
+    public function wijzigOmschrijving()
+    {
+        $nwomschrijving = filter_input(INPUT_POST,'nwomschrijving');
+        $omschrijving = $this->getAfdeling()->getOmschrijving();
+        
+        if($nwomschrijving===null ||$omschrijving===null )
+        {
+            return REQUEST_FAILURE_DATA_INCOMPLETE;
+        }
+        
+        if(empty($nwomschrijving)||empty($omschrijving))
+        {
+            return REQUEST_FAILURE_DATA_INCOMPLETE;
+        }
+        if($nwomschrijving===$omschrijving)
+        {
+            return REQUEST_NOTHING_CHANGED;
+        }
+        
+         $id = getAfdeling()->getId();
+         $sql = "UPDATE `afdelingen` SET `afdelingen`.`omschrijving`= '$nwomschrijving' WHERE `afdeling`.`id`= $id";
+         
+        $stmnt = $this->db->prepare($sql);
+        $stmnt->execute();
+        $aantalGewijzigd = $stmnt->rowCount();
+        if($aantalGewijzigd === 1)
+        {
+            $this->updateGebruiker();
+            return REQUEST_SUCCESS;
+        }
+        return REQUEST_NOTHING_CHANGED;
+        
+       
+    }
     
 
     public function getAfdelingen() {

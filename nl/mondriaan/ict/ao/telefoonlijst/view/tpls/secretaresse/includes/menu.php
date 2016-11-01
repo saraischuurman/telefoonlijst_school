@@ -11,6 +11,7 @@
         </li>
         <li><a href="?control=secretaresse&action=beheer">contact beheer</a></li>
         <li><a href="?control=secretaresse&action=dicbeheer">directeur beheer</a></li>
+        <li><a href="?control=secretaresse&action=wijzigomschrijving">wijzig afdelingen</a></li>
         <li><a href="?control=secretaresse&action=uitloggen">uitloggen</a></li>
     </ul>
 </nav>

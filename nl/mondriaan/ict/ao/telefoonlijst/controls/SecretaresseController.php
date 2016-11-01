@@ -303,4 +303,33 @@ class SecretaresseController
            
     }
     
+    private function wijzigomschrijvingAction()
+    {
+        if($this->model->isPostLeeg())
+        {
+           $this->view->set("boodschap","Wijzig hier de afdeling omschrijving");
+        }
+        else{
+            $result = $this->model->wijzigOmschrijving();
+            switch($result){
+                case REQUEST_SUCCESS:
+                    $this->view->set('boodschap','wijziging gelukt');
+                    break;
+                case REQUEST_FAILURE_DATA_INCOMPLETE:
+                    $this->view->set("boodschap","De gegevens waren incompleet. Vul compleet in!");
+                    break;
+                case REQUEST_NOTHING_CHANGED:
+                    $this->view->set("boodschap","Er was niets te wijzigen");
+                    break;
+                case REQUEST_FAILURE_DATA_INVALID:
+                    $this->view->set("boodschap","gebruikersnaam is al in gebruik, kies een andere waarde.");
+                    break;
+            }   
+        }
+        
+        $gebruiker = $this->model->wijzigOmschrijving();
+           $this->view->set('gebruiker',$gebruiker[0]);
+        
+    }
+    
 }
